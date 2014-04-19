@@ -39,7 +39,7 @@ void init_serial( void)
 
     // enable interrupts
     IFS0bits.U1RXIF = 0;
-    IEC0bits.U1RXIE = 0;
+    IEC0bits.U1RXIE = 1;
 
     g_err = ALL_GOOD;
 }
