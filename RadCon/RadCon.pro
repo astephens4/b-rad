@@ -12,16 +12,21 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         radiocontrol.cpp \
-    globals.cpp
+    globals.cpp \
+    connectiondialog.cpp
+
+QMAKE_CXXFLAGS += -std=c++0x -Werror
 
 HEADERS  += radiocontrol.h \
-    globals.h
+    globals.h \
+    connectiondialog.h
 
-FORMS    += radiocontrol.ui
+FORMS    += radiocontrol.ui \
+    connectiondialog.ui
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../../../../../home/alex/Programming/lib/ -lUtils
 
-INCLUDEPATH += $$PWD/../../../../../home/alex/Programming/include
-DEPENDPATH += $$PWD/../../../../../home/alex/Programming/include
+INCLUDEPATH += /mnt/data/Programming/include
+DEPENDPATH += /mnt/data/Programming/include
 
-unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/../../../../../home/alex/Programming/lib/libUtils.a
+unix:!macx:!symbian: PRE_TARGETDEPS += /mnt/data/Programming/lib/libUtils.a

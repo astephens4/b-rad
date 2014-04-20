@@ -1,7 +1,13 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H 1
 
-#include <Utils/SerialPeer.hpp>
+#define FM_MIN_FREQ 88.0
+#define FM_MAX_FREQ 107.9
+
+#define AM_MIN_FREQ 540
+#define AM_MAX_FREQ 1600
+
+#include "Utils/SerialPeer.hpp"
 
 enum RadioCommand {
     TUNE = 0,
@@ -43,21 +49,26 @@ bool sendCommand(RadioCommand cmd);
 
 class Globals {
 public:
-    Globals* instance(const std::string& uartCon);
+    static Globals* instance();
 
 
    void setFreq(double freq);
+   double getFreq(void);
 
     FrequencyBand band;
-    unsigned char freq;
+    unsigned char fm_freq;
+    unsigned char am_freq;
     unsigned char preset;
     unsigned char volume;
     bool seekActive;
+    AdvanceMode mode;
+    Direction dir;
+    DisplayMode dispMode;
+    Utils::SerialPeer *connection;
 private:
-    Globals(const std::string& uartCon);
-    Utils::SerialPeer connection;
+    Globals();
 
-    Globals *onlyInstance;
+    static Globals *onlyInstance;
 };
 
 #endif // GLOBALS_H
