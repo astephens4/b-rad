@@ -19,7 +19,7 @@ endif
 endif
 
 # Environment
-MKDIR=gnumkdir -p
+MKDIR=mkdir -p
 RM=rm -f 
 MV=mv 
 CP=cp 
@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=
+SOURCEFILES_QUOTED_IF_SPACED=libLCD.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=
-POSSIBLE_DEPFILES=
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/libLCD.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/libLCD.o.d
 
 # Object Files
-OBJECTFILES=
+OBJECTFILES=${OBJECTDIR}/libLCD.o
 
 # Source Files
-SOURCEFILES=
+SOURCEFILES=libLCD.c
 
 
 CFLAGS=
@@ -73,17 +73,17 @@ FIXDEPS=fixDeps
 
 # The following macros may be used in the pre and post step lines
 Device=PIC24FJ128GA010
-ProjectDir="D:\Embedded\b-rad\LCD"
+ProjectDir=/mnt/data/Embedded/b-rad/LCD
 ConfName=default
-ImagePath="dist\default\${IMAGE_TYPE}\LCD.${OUTPUT_SUFFIX}"
-ImageDir="dist\default\${IMAGE_TYPE}"
-ImageName="LCD.${OUTPUT_SUFFIX}"
+ImagePath=dist/default/${IMAGE_TYPE}/LCD.${OUTPUT_SUFFIX}
+ImageDir=dist/default/${IMAGE_TYPE}
+ImageName=LCD.${OUTPUT_SUFFIX}
 
 .build-conf:  ${BUILD_SUBPROJECTS}
-	${MAKE} ${MAKE_OPTIONS} -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/LCD.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/LCD.${OUTPUT_SUFFIX}
 	@echo "--------------------------------------"
-	@echo "User defined post-build step: [copy ${ProjectDir}\${ImagePath} ${ProjectDir}\..\lib\lib${ImageName}]"
-	@copy ${ProjectDir}\${ImagePath} ${ProjectDir}\..\lib\lib${ImageName}
+	@echo "User defined post-build step: [cp ${ProjectDir}/${ImagePath} ${ProjectDir}/../lib/lib${ImageName}]"
+	@cp ${ProjectDir}/${ImagePath} ${ProjectDir}/../lib/lib${ImageName}
 	@echo "--------------------------------------"
 
 MP_PROCESSOR_OPTION=24FJ128GA010
@@ -91,7 +91,21 @@ MP_LINKER_FILE_OPTION=,--script=p24FJ128GA010.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/libLCD.o: libLCD.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/libLCD.o.d 
+	@${RM} ${OBJECTDIR}/libLCD.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  libLCD.c  -o ${OBJECTDIR}/libLCD.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/libLCD.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -O0 -I"../include" -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/libLCD.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
+${OBJECTDIR}/libLCD.o: libLCD.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/libLCD.o.d 
+	@${RM} ${OBJECTDIR}/libLCD.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  libLCD.c  -o ${OBJECTDIR}/libLCD.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/libLCD.o.d"      -g -omf=elf -O0 -I"../include" -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/libLCD.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 endif
 
 # ------------------------------------------------------------------------------------
@@ -138,7 +152,7 @@ endif
 # Enable dependency checking
 .dep.inc: .depcheck-impl
 
-DEPFILES=$(shell mplabwildcard ${POSSIBLE_DEPFILES})
+DEPFILES=$(shell "${PATH_TO_IDE_BIN}"mplabwildcard ${POSSIBLE_DEPFILES})
 ifneq (${DEPFILES},)
 include ${DEPFILES}
 endif

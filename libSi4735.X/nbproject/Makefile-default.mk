@@ -19,7 +19,7 @@ endif
 endif
 
 # Environment
-MKDIR=gnumkdir -p
+MKDIR=mkdir -p
 RM=rm -f 
 MV=mv 
 CP=cp 
@@ -30,12 +30,12 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
 OUTPUT_SUFFIX=a
 DEBUGGABLE_SUFFIX=a
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/I2C.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX}
 else
 IMAGE_TYPE=production
 OUTPUT_SUFFIX=a
 DEBUGGABLE_SUFFIX=a
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/I2C.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX}
 endif
 
 # Object Directory
@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=i2c.c
+SOURCEFILES_QUOTED_IF_SPACED=Si4735.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/i2c.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/i2c.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Si4735.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/Si4735.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/i2c.o
+OBJECTFILES=${OBJECTDIR}/Si4735.o
 
 # Source Files
-SOURCEFILES=i2c.c
+SOURCEFILES=Si4735.c
 
 
 CFLAGS=
@@ -73,17 +73,17 @@ FIXDEPS=fixDeps
 
 # The following macros may be used in the pre and post step lines
 Device=PIC24FJ128GA010
-ProjectDir="D:\Embedded\b-rad\I2C"
+ProjectDir=/mnt/data/Embedded/b-rad/libSi4735.X
 ConfName=default
-ImagePath="dist\default\${IMAGE_TYPE}\I2C.${OUTPUT_SUFFIX}"
-ImageDir="dist\default\${IMAGE_TYPE}"
-ImageName="I2C.${OUTPUT_SUFFIX}"
+ImagePath=dist/default/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX}
+ImageDir=dist/default/${IMAGE_TYPE}
+ImageName=libSi4735.X.${OUTPUT_SUFFIX}
 
 .build-conf:  ${BUILD_SUBPROJECTS}
-	${MAKE} ${MAKE_OPTIONS} -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/I2C.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX}
 	@echo "--------------------------------------"
-	@echo "User defined post-build step: [copy ${ProjectDir}\${ImagePath} ${ProjectDir}\..\lib\lib${ImageName}]"
-	@copy ${ProjectDir}\${ImagePath} ${ProjectDir}\..\lib\lib${ImageName}
+	@echo "User defined post-build step: [cp ${ProjectDir}/${ImagePath} ${ProjectDir}/../lib/lib${ImageName}]"
+	@cp ${ProjectDir}/${ImagePath} ${ProjectDir}/../lib/lib${ImageName}
 	@echo "--------------------------------------"
 
 MP_PROCESSOR_OPTION=24FJ128GA010
@@ -91,20 +91,20 @@ MP_LINKER_FILE_OPTION=,--script=p24FJ128GA010.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/i2c.o: i2c.c  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/Si4735.o: Si4735.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
-	@${RM} ${OBJECTDIR}/i2c.o.d 
-	@${RM} ${OBJECTDIR}/i2c.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  i2c.c  -o ${OBJECTDIR}/i2c.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/i2c.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -O0 -I"../include" -I"../Util" -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/i2c.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	@${RM} ${OBJECTDIR}/Si4735.o.d 
+	@${RM} ${OBJECTDIR}/Si4735.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  Si4735.c  -o ${OBJECTDIR}/Si4735.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Si4735.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -O0 -I"../include" -I"../Util" -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/Si4735.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
-${OBJECTDIR}/i2c.o: i2c.c  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/Si4735.o: Si4735.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
-	@${RM} ${OBJECTDIR}/i2c.o.d 
-	@${RM} ${OBJECTDIR}/i2c.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  i2c.c  -o ${OBJECTDIR}/i2c.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/i2c.o.d"      -g -omf=elf -O0 -I"../include" -I"../Util" -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/i2c.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	@${RM} ${OBJECTDIR}/Si4735.o.d 
+	@${RM} ${OBJECTDIR}/Si4735.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  Si4735.c  -o ${OBJECTDIR}/Si4735.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Si4735.o.d"      -g -omf=elf -O0 -I"../include" -I"../Util" -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/Si4735.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 
@@ -123,16 +123,16 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: archive
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/I2C.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
+dist/${CND_CONF}/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/I2C.${OUTPUT_SUFFIX} 
-	${MP_AR} $(MP_EXTRA_AR_PRE)  -omf=elf -r dist/${CND_CONF}/${IMAGE_TYPE}/I2C.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      
+	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX} 
+	${MP_AR} $(MP_EXTRA_AR_PRE)  -omf=elf -r dist/${CND_CONF}/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      
 	
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/I2C.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
+dist/${CND_CONF}/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/I2C.${OUTPUT_SUFFIX} 
-	${MP_AR} $(MP_EXTRA_AR_PRE)  -omf=elf -r dist/${CND_CONF}/${IMAGE_TYPE}/I2C.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      
+	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX} 
+	${MP_AR} $(MP_EXTRA_AR_PRE)  -omf=elf -r dist/${CND_CONF}/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      
 	
 endif
 
@@ -152,7 +152,7 @@ endif
 # Enable dependency checking
 .dep.inc: .depcheck-impl
 
-DEPFILES=$(shell mplabwildcard ${POSSIBLE_DEPFILES})
+DEPFILES=$(shell "${PATH_TO_IDE_BIN}"mplabwildcard ${POSSIBLE_DEPFILES})
 ifneq (${DEPFILES},)
 include ${DEPFILES}
 endif

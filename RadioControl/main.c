@@ -1,11 +1,15 @@
 #include <config.h>
 #include <circ_buf.h>
 
-#include <uart.h>
+#include "uart.h"
+#include "libLCD.h"
+#include "Si4735.h"
 
 int main(void)
 {
     init_serial();
+    initLCD();
+    initRadio();
 
     writeStr_serial("Hello World!");
     while(1) {

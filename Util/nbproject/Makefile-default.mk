@@ -19,7 +19,7 @@ endif
 endif
 
 # Environment
-MKDIR=gnumkdir -p
+MKDIR=mkdir -p
 RM=rm -f 
 MV=mv 
 CP=cp 
@@ -73,17 +73,17 @@ FIXDEPS=fixDeps
 
 # The following macros may be used in the pre and post step lines
 Device=PIC24FJ128GA010
-ProjectDir="D:\Embedded\b-rad\Util"
+ProjectDir=/mnt/data/Embedded/b-rad/Util
 ConfName=default
-ImagePath="dist\default\${IMAGE_TYPE}\Util.${OUTPUT_SUFFIX}"
-ImageDir="dist\default\${IMAGE_TYPE}"
-ImageName="Util.${OUTPUT_SUFFIX}"
+ImagePath=dist/default/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX}
+ImageDir=dist/default/${IMAGE_TYPE}
+ImageName=Util.${OUTPUT_SUFFIX}
 
 .build-conf:  ${BUILD_SUBPROJECTS}
-	${MAKE} ${MAKE_OPTIONS} -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX}
 	@echo "--------------------------------------"
-	@echo "User defined post-build step: [copy ${ProjectDir}\${ImagePath} ${ProjectDir}\..\lib\lib${ImageName}]"
-	@copy ${ProjectDir}\${ImagePath} ${ProjectDir}\..\lib\lib${ImageName}
+	@echo "User defined post-build step: [cp ${ProjectDir}/${ImagePath} ${ProjectDir}/../lib/lib${ImageName}]"
+	@cp ${ProjectDir}/${ImagePath} ${ProjectDir}/../lib/lib${ImageName}
 	@echo "--------------------------------------"
 
 MP_PROCESSOR_OPTION=24FJ128GA010
@@ -152,7 +152,7 @@ endif
 # Enable dependency checking
 .dep.inc: .depcheck-impl
 
-DEPFILES=$(shell mplabwildcard ${POSSIBLE_DEPFILES})
+DEPFILES=$(shell "${PATH_TO_IDE_BIN}"mplabwildcard ${POSSIBLE_DEPFILES})
 ifneq (${DEPFILES},)
 include ${DEPFILES}
 endif

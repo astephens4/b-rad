@@ -2,8 +2,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>libUART</name>
-            <creation-uuid>cc0edccb-9a13-413d-955d-a3d8361d4c3f</creation-uuid>
+            <name>libSi4735</name>
+            <creation-uuid>77c575f4-7245-4151-a28c-cddf79840e81</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>

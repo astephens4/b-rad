@@ -10,9 +10,9 @@ CND_CONF=default
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/I2C.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=I2C.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=I2C/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=libSi4735.X.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=libSi4735.X/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/I2C/lib
+makeDirectory ${TMPDIR}/libSi4735.X/lib
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}" 0644
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/I2C.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/libSi4735.X.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/I2C.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/libSi4735.X.tar *
 checkReturnCode
 
 # Cleanup
