@@ -95,7 +95,7 @@ ${OBJECTDIR}/Si4735.o: Si4735.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/Si4735.o.d 
 	@${RM} ${OBJECTDIR}/Si4735.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  Si4735.c  -o ${OBJECTDIR}/Si4735.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Si4735.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -O0 -I"../include" -I"../Util" -msmart-io=1 -Wall -msfr-warn=off
+	${MP_CC} $(MP_EXTRA_CC_PRE)  Si4735.c  -o ${OBJECTDIR}/Si4735.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Si4735.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -O0 -I"../include" -I"../Util" -I"../SEE" -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/Si4735.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
@@ -103,7 +103,7 @@ ${OBJECTDIR}/Si4735.o: Si4735.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/Si4735.o.d 
 	@${RM} ${OBJECTDIR}/Si4735.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  Si4735.c  -o ${OBJECTDIR}/Si4735.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Si4735.o.d"      -g -omf=elf -O0 -I"../include" -I"../Util" -msmart-io=1 -Wall -msfr-warn=off
+	${MP_CC} $(MP_EXTRA_CC_PRE)  Si4735.c  -o ${OBJECTDIR}/Si4735.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Si4735.o.d"        -g -omf=elf -O0 -I"../include" -I"../Util" -I"../SEE" -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/Si4735.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif

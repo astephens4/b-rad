@@ -30,12 +30,12 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
 OUTPUT_SUFFIX=a
 DEBUGGABLE_SUFFIX=a
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX}
 else
 IMAGE_TYPE=production
 OUTPUT_SUFFIX=a
 DEBUGGABLE_SUFFIX=a
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX}
 endif
 
 # Object Directory
@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=circ_buf.c
+SOURCEFILES_QUOTED_IF_SPACED=/mnt/data/Embedded/b-rad/SEE/SEE25.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/circ_buf.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/circ_buf.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1801884285/SEE25.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1801884285/SEE25.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/circ_buf.o
+OBJECTFILES=${OBJECTDIR}/_ext/1801884285/SEE25.o
 
 # Source Files
-SOURCEFILES=circ_buf.c
+SOURCEFILES=/mnt/data/Embedded/b-rad/SEE/SEE25.c
 
 
 CFLAGS=
@@ -73,14 +73,14 @@ FIXDEPS=fixDeps
 
 # The following macros may be used in the pre and post step lines
 Device=PIC24FJ128GA010
-ProjectDir=/mnt/data/Embedded/b-rad/Util
+ProjectDir=/home/alex/Embedded/b-rad/SEE
 ConfName=default
-ImagePath=dist/default/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX}
+ImagePath=dist/default/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX}
 ImageDir=dist/default/${IMAGE_TYPE}
-ImageName=Util.${OUTPUT_SUFFIX}
+ImageName=SEE.${OUTPUT_SUFFIX}
 
 .build-conf:  ${BUILD_SUBPROJECTS}
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX}
 	@echo "--------------------------------------"
 	@echo "User defined post-build step: [cp ${ProjectDir}/${ImagePath} ${ProjectDir}/../lib/lib${ImageName}]"
 	@cp ${ProjectDir}/${ImagePath} ${ProjectDir}/../lib/lib${ImageName}
@@ -91,20 +91,20 @@ MP_LINKER_FILE_OPTION=,--script=p24FJ128GA010.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/circ_buf.o: circ_buf.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR} 
-	@${RM} ${OBJECTDIR}/circ_buf.o.d 
-	@${RM} ${OBJECTDIR}/circ_buf.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  circ_buf.c  -o ${OBJECTDIR}/circ_buf.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/circ_buf.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -O0 -I"../include" -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/circ_buf.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/1801884285/SEE25.o: /mnt/data/Embedded/b-rad/SEE/SEE25.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1801884285 
+	@${RM} ${OBJECTDIR}/_ext/1801884285/SEE25.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1801884285/SEE25.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  /mnt/data/Embedded/b-rad/SEE/SEE25.c  -o ${OBJECTDIR}/_ext/1801884285/SEE25.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1801884285/SEE25.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -O0 -I"./" -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1801884285/SEE25.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
-${OBJECTDIR}/circ_buf.o: circ_buf.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR} 
-	@${RM} ${OBJECTDIR}/circ_buf.o.d 
-	@${RM} ${OBJECTDIR}/circ_buf.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  circ_buf.c  -o ${OBJECTDIR}/circ_buf.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/circ_buf.o.d"        -g -omf=elf -O0 -I"../include" -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/circ_buf.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/1801884285/SEE25.o: /mnt/data/Embedded/b-rad/SEE/SEE25.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1801884285 
+	@${RM} ${OBJECTDIR}/_ext/1801884285/SEE25.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1801884285/SEE25.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  /mnt/data/Embedded/b-rad/SEE/SEE25.c  -o ${OBJECTDIR}/_ext/1801884285/SEE25.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1801884285/SEE25.o.d"        -g -omf=elf -O0 -I"./" -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1801884285/SEE25.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 
@@ -123,16 +123,16 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: archive
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
+dist/${CND_CONF}/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX} 
-	${MP_AR} $(MP_EXTRA_AR_PRE)  -omf=elf -r dist/${CND_CONF}/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      
+	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX} 
+	${MP_AR} $(MP_EXTRA_AR_PRE)  -omf=elf -r dist/${CND_CONF}/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      
 	
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
+dist/${CND_CONF}/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX} 
-	${MP_AR} $(MP_EXTRA_AR_PRE)  -omf=elf -r dist/${CND_CONF}/${IMAGE_TYPE}/Util.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      
+	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX} 
+	${MP_AR} $(MP_EXTRA_AR_PRE)  -omf=elf -r dist/${CND_CONF}/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      
 	
 endif
 

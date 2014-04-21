@@ -95,7 +95,7 @@ ${OBJECTDIR}/libLCD.o: libLCD.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/libLCD.o.d 
 	@${RM} ${OBJECTDIR}/libLCD.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  libLCD.c  -o ${OBJECTDIR}/libLCD.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/libLCD.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -O0 -I"../include" -msmart-io=1 -Wall -msfr-warn=off
+	${MP_CC} $(MP_EXTRA_CC_PRE)  libLCD.c  -o ${OBJECTDIR}/libLCD.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/libLCD.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -O0 -I"../include" -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/libLCD.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
@@ -103,7 +103,7 @@ ${OBJECTDIR}/libLCD.o: libLCD.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/libLCD.o.d 
 	@${RM} ${OBJECTDIR}/libLCD.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  libLCD.c  -o ${OBJECTDIR}/libLCD.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/libLCD.o.d"      -g -omf=elf -O0 -I"../include" -msmart-io=1 -Wall -msfr-warn=off
+	${MP_CC} $(MP_EXTRA_CC_PRE)  libLCD.c  -o ${OBJECTDIR}/libLCD.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/libLCD.o.d"        -g -omf=elf -O0 -I"../include" -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/libLCD.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif

@@ -17,12 +17,23 @@ enum Band {
     AM
 };
 
+enum Direction {
+    DOWN = 0,
+    UP
+};
+
 /**
  * Initialize the first SI4735 module
  */
 void initRadio(void);
 
-void tuneStation(enum Band, int freq);
+void shutDown(void);
+
+void launchFM(void);
+void launchAM(void);
+
+void tuneStation(enum Band band, int freq);
+void seek(enum Band band, enum Direction dir);
 
 void setVolume(int val);
 
@@ -70,8 +81,8 @@ enum RadioProperties {
     FM_SOFT_MUTE_MAX_ATTENUATION = 0x1302,
     FM_SOFT_MUTE_SNR_THRESHOLD = 0x1303,
     FM_SOFT_MUTE_RELEASE_RATE = 0x1304,
-    FM_SOFT_MUTE_ATTACK_RATE 0x1305,
-    FM_SEEK_BAND_BOTTOM 0x1400,
+    FM_SOFT_MUTE_ATTACK_RATE = 0x1305,
+    FM_SEEK_BAND_BOTTOM = 0x1400,
     FM_SEEK_BAND_TOP = 0x1401,
     FM_SEEK_FREQ_SPACING = 0x1402,
     FM_SEEK_TUNE_SNR_THRESHOLD = 0x1403,
@@ -79,7 +90,7 @@ enum RadioProperties {
     FM_RDS_INT_SOURCE = 0x1500,
     FM_RDS_INT_FIFO_COUNT = 0x1501,
     FM_RDS_CONFIG = 0x1502,
-    FM_RDS_CONFIDENCE = 0x1503
+    FM_RDS_CONFIDENCE = 0x1503,
     FM_AGC_ATTACK_RATE = 0x1700,
     FM_AGC_RELEASE_RATE = 0x1701,
     FM_BLEND_RSSI_STEREO_THRESHOLD = 0x1800,
@@ -100,7 +111,7 @@ struct RadioStatus {
     unsigned RDSINT : 1;
     unsigned : 1;
     unsigned STCINT : 1;
-} lastReceived;
+};
 
 #ifdef	__cplusplus
 }

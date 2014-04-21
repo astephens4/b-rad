@@ -12,6 +12,7 @@
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects>
                 <make-dep-project>../Util</make-dep-project>
+                <make-dep-project>/home/alex/Embedded/b-rad/SEE</make-dep-project>
                 <make-dep-project>../libSi4735.X</make-dep-project>
                 <make-dep-project>../LCD</make-dep-project>
                 <make-dep-project>../UART</make-dep-project>

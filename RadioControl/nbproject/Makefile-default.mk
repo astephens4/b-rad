@@ -83,7 +83,7 @@ ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/main.o.d 
 	@${RM} ${OBJECTDIR}/main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -O0 -I"../include" -I"../UART" -I"../LCD" -I"../Util" -I"../../../../../opt/microchip/xc16/v1.21/support/peripheral_24F" -I"../libSi4735.X" -msmart-io=1 -Wall -msfr-warn=off
+	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -O0 -I"../include" -I"../UART" -I"../LCD" -I"../Util" -I"../../../../../opt/microchip/xc16/v1.21/support/peripheral_24F" -I"../libSi4735.X" -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
@@ -91,7 +91,7 @@ ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/main.o.d 
 	@${RM} ${OBJECTDIR}/main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -g -omf=elf -O0 -I"../include" -I"../UART" -I"../LCD" -I"../Util" -I"../../../../../opt/microchip/xc16/v1.21/support/peripheral_24F" -I"../libSi4735.X" -msmart-io=1 -Wall -msfr-warn=off
+	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"        -g -omf=elf -O0 -I"../include" -I"../UART" -I"../LCD" -I"../Util" -I"../../../../../opt/microchip/xc16/v1.21/support/peripheral_24F" -I"../libSi4735.X" -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
@@ -111,14 +111,14 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: link
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/RadioControl.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../Util/dist/default/debug/Util.a ../UART/dist/default/debug/UART.a ../LCD/dist/default/debug/LCD.a ../libSi4735.X/dist/default/debug/libSi4735.X.a  
+dist/${CND_CONF}/${IMAGE_TYPE}/RadioControl.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../libSi4735.X/dist/default/debug/libSi4735.X.a ../LCD/dist/default/debug/LCD.a ../UART/dist/default/debug/UART.a ../Util/dist/default/debug/Util.a /home/alex/Embedded/b-rad/SEE/dist/default/debug/SEE.a  
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -o dist/${CND_CONF}/${IMAGE_TYPE}/RadioControl.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}    ../Util/dist/default/debug/Util.a ../UART/dist/default/debug/UART.a ../LCD/dist/default/debug/LCD.a ../libSi4735.X/dist/default/debug/libSi4735.X.a  -mcpu=$(MP_PROCESSOR_OPTION)        -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf  -mreserve=data@0x800:0x81F -mreserve=data@0x820:0x821 -mreserve=data@0x822:0x823 -mreserve=data@0x824:0x825 -mreserve=data@0x826:0x84F   -Wl,--defsym=__MPLAB_BUILD=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PK3=1,$(MP_LINKER_FILE_OPTION),--stack=16,--check-sections,--data-init,--pack-data,--handles,--isr,--no-gc-sections,--fill-upper=0,--stackguard=16,--library=pPIC24Fxxx-elf,--library-path="../lib",--no-force-link,--smart-io,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST) 
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -o dist/${CND_CONF}/${IMAGE_TYPE}/RadioControl.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}    ../libSi4735.X/dist/default/debug/libSi4735.X.a ../LCD/dist/default/debug/LCD.a ../UART/dist/default/debug/UART.a ../Util/dist/default/debug/Util.a /home/alex/Embedded/b-rad/SEE/dist/default/debug/SEE.a  -mcpu=$(MP_PROCESSOR_OPTION)        -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf  -mreserve=data@0x800:0x81F -mreserve=data@0x820:0x821 -mreserve=data@0x822:0x823 -mreserve=data@0x824:0x825 -mreserve=data@0x826:0x84F   -Wl,,--defsym=__MPLAB_BUILD=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PK3=1,$(MP_LINKER_FILE_OPTION),--stack=16,--check-sections,--data-init,--pack-data,--handles,--isr,--no-gc-sections,--fill-upper=0,--stackguard=16,--library=pPIC24Fxxx-elf,--library-path="../lib",--no-force-link,--smart-io,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST) 
 	
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/RadioControl.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../Util/dist/default/production/Util.a ../UART/dist/default/production/UART.a ../LCD/dist/default/production/LCD.a ../libSi4735.X/dist/default/production/libSi4735.X.a 
+dist/${CND_CONF}/${IMAGE_TYPE}/RadioControl.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../libSi4735.X/dist/default/production/libSi4735.X.a ../LCD/dist/default/production/LCD.a ../UART/dist/default/production/UART.a ../Util/dist/default/production/Util.a /home/alex/Embedded/b-rad/SEE/dist/default/production/SEE.a 
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -o dist/${CND_CONF}/${IMAGE_TYPE}/RadioControl.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}    ../Util/dist/default/production/Util.a ../UART/dist/default/production/UART.a ../LCD/dist/default/production/LCD.a ../libSi4735.X/dist/default/production/libSi4735.X.a  -mcpu=$(MP_PROCESSOR_OPTION)        -omf=elf -Wl,--defsym=__MPLAB_BUILD=1,$(MP_LINKER_FILE_OPTION),--stack=16,--check-sections,--data-init,--pack-data,--handles,--isr,--no-gc-sections,--fill-upper=0,--stackguard=16,--library=pPIC24Fxxx-elf,--library-path="../lib",--no-force-link,--smart-io,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST) 
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -o dist/${CND_CONF}/${IMAGE_TYPE}/RadioControl.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}    ../libSi4735.X/dist/default/production/libSi4735.X.a ../LCD/dist/default/production/LCD.a ../UART/dist/default/production/UART.a ../Util/dist/default/production/Util.a /home/alex/Embedded/b-rad/SEE/dist/default/production/SEE.a  -mcpu=$(MP_PROCESSOR_OPTION)        -omf=elf -Wl,,--defsym=__MPLAB_BUILD=1,$(MP_LINKER_FILE_OPTION),--stack=16,--check-sections,--data-init,--pack-data,--handles,--isr,--no-gc-sections,--fill-upper=0,--stackguard=16,--library=pPIC24Fxxx-elf,--library-path="../lib",--no-force-link,--smart-io,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST) 
 	${MP_CC_DIR}/xc16-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/RadioControl.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} -a  -omf=elf 
 	
 endif
@@ -126,18 +126,20 @@ endif
 
 # Subprojects
 .build-subprojects:
-	cd ../Util && ${MAKE}  -f Makefile CONF=default
-	cd ../UART && ${MAKE}  -f Makefile CONF=default
-	cd ../LCD && ${MAKE}  -f Makefile CONF=default
 	cd ../libSi4735.X && ${MAKE}  -f Makefile CONF=default
+	cd ../LCD && ${MAKE}  -f Makefile CONF=default
+	cd ../UART && ${MAKE}  -f Makefile CONF=default
+	cd ../Util && ${MAKE}  -f Makefile CONF=default
+	cd /home/alex/Embedded/b-rad/SEE && ${MAKE}  -f Makefile CONF=default
 
 
 # Subprojects
 .clean-subprojects:
-	cd ../Util && rm -rf "build/default" "dist/default"
-	cd ../UART && rm -rf "build/default" "dist/default"
-	cd ../LCD && rm -rf "build/default" "dist/default"
 	cd ../libSi4735.X && rm -rf "build/default" "dist/default"
+	cd ../LCD && rm -rf "build/default" "dist/default"
+	cd ../UART && rm -rf "build/default" "dist/default"
+	cd ../Util && rm -rf "build/default" "dist/default"
+	cd /home/alex/Embedded/b-rad/SEE && rm -rf "build/default" "dist/default"
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
