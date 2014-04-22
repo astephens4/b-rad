@@ -13,7 +13,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>/mnt/data/Embedded/b-rad/SEE/SEE25.c</itemPath>
+      <itemPath>SEE25.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -21,9 +21,6 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
-  <sourceRootList>
-    <Elem>/mnt/data/Embedded/b-rad/SEE</Elem>
-  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="3">
@@ -35,7 +32,7 @@
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
         <languageToolchainVersion>1.21</languageToolchainVersion>
-        <platform>2</platform>
+        <platform>3</platform>
       </toolsSet>
       <compileType>
         <archiverTool>
@@ -64,7 +61,7 @@
         <property key="enable-short-double" value="false"/>
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
-        <property key="extra-include-directories" value="./"/>
+        <property key="extra-include-directories" value=".;D:\Embedded\b-rad\SEE"/>
         <property key="isolate-each-function" value="false"/>
         <property key="keep-inline" value="false"/>
         <property key="oXC16gcc-align-arr" value="false"/>
@@ -103,19 +100,11 @@
         <property key="enable-handles" value="true"/>
         <property key="enable-pack-data" value="true"/>
         <property key="extra-lib-directories" value=""/>
-        <property key="fill-flash-options-addr" value=""/>
-        <property key="fill-flash-options-const" value=""/>
-        <property key="fill-flash-options-how" value="0"/>
-        <property key="fill-flash-options-inc-const" value="1"/>
-        <property key="fill-flash-options-increment" value=""/>
-        <property key="fill-flash-options-seq" value=""/>
-        <property key="fill-flash-options-what" value="0"/>
         <property key="general-code-protect" value="no_code_protect"/>
         <property key="general-write-protect" value="no_write_protect"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="heap-size" value=""/>
         <property key="input-libraries" value=""/>
-        <property key="linker-stack" value="true"/>
         <property key="linker-symbols" value=""/>
         <property key="map-file" value="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"/>
         <property key="oXC16ld-extra-opts" value=""/>
@@ -142,7 +131,6 @@
         <property key="legacy-libc" value="false"/>
         <property key="oXC16glb-macros" value=""/>
         <property key="output-file-format" value="elf"/>
-        <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
       </C30Global>
       <PICkit3PlatformTool>

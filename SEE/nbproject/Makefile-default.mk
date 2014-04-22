@@ -19,7 +19,7 @@ endif
 endif
 
 # Environment
-MKDIR=mkdir -p
+MKDIR=gnumkdir -p
 RM=rm -f 
 MV=mv 
 CP=cp 
@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=/mnt/data/Embedded/b-rad/SEE/SEE25.c
+SOURCEFILES_QUOTED_IF_SPACED=SEE25.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1801884285/SEE25.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1801884285/SEE25.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/SEE25.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/SEE25.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/_ext/1801884285/SEE25.o
+OBJECTFILES=${OBJECTDIR}/SEE25.o
 
 # Source Files
-SOURCEFILES=/mnt/data/Embedded/b-rad/SEE/SEE25.c
+SOURCEFILES=SEE25.c
 
 
 CFLAGS=
@@ -73,14 +73,14 @@ FIXDEPS=fixDeps
 
 # The following macros may be used in the pre and post step lines
 Device=PIC24FJ128GA010
-ProjectDir=/home/alex/Embedded/b-rad/SEE
+ProjectDir="D:\Embedded\b-rad\SEE"
 ConfName=default
-ImagePath=dist/default/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX}
-ImageDir=dist/default/${IMAGE_TYPE}
-ImageName=SEE.${OUTPUT_SUFFIX}
+ImagePath="dist\default\${IMAGE_TYPE}\SEE.${OUTPUT_SUFFIX}"
+ImageDir="dist\default\${IMAGE_TYPE}"
+ImageName="SEE.${OUTPUT_SUFFIX}"
 
 .build-conf:  ${BUILD_SUBPROJECTS}
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX}
+	${MAKE} ${MAKE_OPTIONS} -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/SEE.${OUTPUT_SUFFIX}
 	@echo "--------------------------------------"
 	@echo "User defined post-build step: [cp ${ProjectDir}/${ImagePath} ${ProjectDir}/../lib/lib${ImageName}]"
 	@cp ${ProjectDir}/${ImagePath} ${ProjectDir}/../lib/lib${ImageName}
@@ -91,20 +91,20 @@ MP_LINKER_FILE_OPTION=,--script=p24FJ128GA010.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/_ext/1801884285/SEE25.o: /mnt/data/Embedded/b-rad/SEE/SEE25.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1801884285 
-	@${RM} ${OBJECTDIR}/_ext/1801884285/SEE25.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1801884285/SEE25.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  /mnt/data/Embedded/b-rad/SEE/SEE25.c  -o ${OBJECTDIR}/_ext/1801884285/SEE25.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1801884285/SEE25.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -O0 -I"./" -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1801884285/SEE25.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/SEE25.o: SEE25.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/SEE25.o.d 
+	@${RM} ${OBJECTDIR}/SEE25.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  SEE25.c  -o ${OBJECTDIR}/SEE25.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/SEE25.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -O0 -I"." -I"D:/Embedded/b-rad/SEE" -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/SEE25.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
-${OBJECTDIR}/_ext/1801884285/SEE25.o: /mnt/data/Embedded/b-rad/SEE/SEE25.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1801884285 
-	@${RM} ${OBJECTDIR}/_ext/1801884285/SEE25.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1801884285/SEE25.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  /mnt/data/Embedded/b-rad/SEE/SEE25.c  -o ${OBJECTDIR}/_ext/1801884285/SEE25.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1801884285/SEE25.o.d"        -g -omf=elf -O0 -I"./" -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1801884285/SEE25.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/SEE25.o: SEE25.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/SEE25.o.d 
+	@${RM} ${OBJECTDIR}/SEE25.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  SEE25.c  -o ${OBJECTDIR}/SEE25.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/SEE25.o.d"      -g -omf=elf -O0 -I"." -I"D:/Embedded/b-rad/SEE" -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/SEE25.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 
@@ -152,7 +152,7 @@ endif
 # Enable dependency checking
 .dep.inc: .depcheck-impl
 
-DEPFILES=$(shell "${PATH_TO_IDE_BIN}"mplabwildcard ${POSSIBLE_DEPFILES})
+DEPFILES=$(shell mplabwildcard ${POSSIBLE_DEPFILES})
 ifneq (${DEPFILES},)
 include ${DEPFILES}
 endif

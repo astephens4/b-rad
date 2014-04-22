@@ -19,7 +19,7 @@ endif
 endif
 
 # Environment
-MKDIR=mkdir -p
+MKDIR=gnumkdir -p
 RM=rm -f 
 MV=mv 
 CP=cp 
@@ -73,14 +73,14 @@ FIXDEPS=fixDeps
 
 # The following macros may be used in the pre and post step lines
 Device=PIC24FJ128GA010
-ProjectDir=/mnt/data/Embedded/b-rad/libSi4735.X
+ProjectDir="D:\Embedded\b-rad\libSi4735.X"
 ConfName=default
-ImagePath=dist/default/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX}
-ImageDir=dist/default/${IMAGE_TYPE}
-ImageName=libSi4735.X.${OUTPUT_SUFFIX}
+ImagePath="dist\default\${IMAGE_TYPE}\libSi4735.X.${OUTPUT_SUFFIX}"
+ImageDir="dist\default\${IMAGE_TYPE}"
+ImageName="libSi4735.X.${OUTPUT_SUFFIX}"
 
 .build-conf:  ${BUILD_SUBPROJECTS}
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX}
+	${MAKE} ${MAKE_OPTIONS} -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/libSi4735.X.${OUTPUT_SUFFIX}
 	@echo "--------------------------------------"
 	@echo "User defined post-build step: [cp ${ProjectDir}/${ImagePath} ${ProjectDir}/../lib/lib${ImageName}]"
 	@cp ${ProjectDir}/${ImagePath} ${ProjectDir}/../lib/lib${ImageName}
@@ -95,7 +95,7 @@ ${OBJECTDIR}/Si4735.o: Si4735.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/Si4735.o.d 
 	@${RM} ${OBJECTDIR}/Si4735.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  Si4735.c  -o ${OBJECTDIR}/Si4735.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Si4735.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -O0 -I"../include" -I"../Util" -I"../SEE" -msmart-io=1 -Wall -msfr-warn=off
+	${MP_CC} $(MP_EXTRA_CC_PRE)  Si4735.c  -o ${OBJECTDIR}/Si4735.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Si4735.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -O0 -I"../include" -I"../Util" -I"../SEE" -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/Si4735.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
@@ -103,7 +103,7 @@ ${OBJECTDIR}/Si4735.o: Si4735.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/Si4735.o.d 
 	@${RM} ${OBJECTDIR}/Si4735.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  Si4735.c  -o ${OBJECTDIR}/Si4735.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Si4735.o.d"        -g -omf=elf -O0 -I"../include" -I"../Util" -I"../SEE" -msmart-io=1 -Wall -msfr-warn=off
+	${MP_CC} $(MP_EXTRA_CC_PRE)  Si4735.c  -o ${OBJECTDIR}/Si4735.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Si4735.o.d"      -g -omf=elf -O0 -I"../include" -I"../Util" -I"../SEE" -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/Si4735.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
@@ -152,7 +152,7 @@ endif
 # Enable dependency checking
 .dep.inc: .depcheck-impl
 
-DEPFILES=$(shell "${PATH_TO_IDE_BIN}"mplabwildcard ${POSSIBLE_DEPFILES})
+DEPFILES=$(shell mplabwildcard ${POSSIBLE_DEPFILES})
 ifneq (${DEPFILES},)
 include ${DEPFILES}
 endif

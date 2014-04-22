@@ -59,37 +59,6 @@ void initRadio(void)
         currentVolume = 50;
     }
 
-    StartI2C1();
-    IdleI2C1();
-
-    MasterWriteI2C1(RADIO_ADDR | 1);
-    IdleI2C1();
-
-    if(I2C1STATbits.ACKSTAT != 0) {
-        int oughoh = 1;
-        oughoh += 3;
-    }
-
-    MasterWriteI2C1(GET_REV);
-    IdleI2C1();
-
-    if(I2C1STATbits.ACKSTAT != 0) {
-        int oughoh = 1;
-        oughoh += 3;
-    }
-
-    lastReceived.i = MasterReadI2C1();
-    IdleI2C1();
-
-    AckI2C1();
-
-    int i = 0;
-    for(i = 0; i < 15; ++i) {
-        int val = MasterReadI2C1();
-        IdleI2C1();
-        AckI2C1();
-    }
-
     if(currentBand == FM) {
         launchFM();
     }
@@ -124,16 +93,18 @@ void shutDown(void)
 
 void launchFM(void)
 {
-    shutDown();
+//    shutDown();
 
     // wait ~400 us
-    T1CON = 0x8030;
-    TMR1 = 0;
-    while(TMR1 < 400) {}
+//    T1CON = 0x8030;
+//    TMR1 = 0;
+//    while(TMR1 < 400) {}
 
     NRESET_PIN = 1;
     while(1) {
         StartI2C1();
+        IdleI2C1();
+        
         MasterWriteI2C1(RADIO_ADDR);
         IdleI2C1();
 
