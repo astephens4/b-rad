@@ -4,22 +4,22 @@
 static struct circ_buf g_uartBuf;
 static int g_err = ALL_GOOD;
 
-void _ISRFAST _U1RXInterrupt(void)
+void _ISRFAST _U2RXInterrupt(void)
 {
-    if(U1STAbits.OERR) {
+    if(U2STAbits.OERR) {
         g_err = BUF_FULL;
-        U1STAbits.OERR = 0;
+        U2STAbits.OERR = 0;
     }
     else {
         int status = 0;
-        while(U1STAbits.URXDA) {
-            append_fast(g_uartBuf, (U1RXREG)&0xFFu, &status);
+        while(U2STAbits.URXDA) {
+            append_fast(g_uartBuf, (U2RXREG)&0xFFu, &status);
             if(status < 0) {
                 g_err = BUF_FULL;
             }
         }
     }
-    IFS0bits.U1RXIF = 0;
+    IFS1bits.U2RXIF = 0;
     return;
 }
 
@@ -28,9 +28,9 @@ void init_serial( void)
     g_uartBuf.size = BUF_LEN;
     g_uartBuf.begin = 0;
     g_uartBuf.end = 0;
-    U1BRG   = BRATE;
-    U1MODE  = U_ENABLE;
-    U1STA   = U_TX;
+    U2BRG   = BRATE;
+    U2MODE  = U_ENABLE;
+    U2STA   = U_TX;
 
     // Hold CTS low
     AD1PCFGbits.PCFG1 = 1; // Set RB1 as digital
@@ -38,8 +38,8 @@ void init_serial( void)
     PORTBbits.RB1 = 0; // Set CTS low for the execution of this program
 
     // enable interrupts
-    IFS0bits.U1RXIF = 0;
-    IEC0bits.U1RXIE = 1;
+    IFS1bits.U2RXIF = 0;
+    IEC1bits.U2RXIE = 1;
 
     g_err = ALL_GOOD;
 }
@@ -48,8 +48,8 @@ void init_serial( void)
 // send a character to the UART2 serial port
 int write_serial(char c)
 {
-    while ( U1STAbits.UTXBF);   // wait while Tx buffer full
-    U1TXREG = c;
+    while ( U2STAbits.UTXBF);   // wait while Tx buffer full
+    U2TXREG = c;
     g_err = ALL_GOOD;
     return c;
 }

@@ -12,6 +12,12 @@
 extern "C" {
 #endif
 
+#define FM_MIN_FREQ 8750
+#define FM_MAX_FREQ 10790
+
+#define AM_MIN_FREQ 540
+#define AM_MAX_FREQ 1600
+
 enum Band {
     FM = 0,
     AM
@@ -22,22 +28,135 @@ enum Direction {
     UP
 };
 
+enum Mode {
+    PRESET = 0,
+    FREQUENCY,
+    SCAN
+};
+
+struct RadioStatus {
+    unsigned STCINT : 1;
+    unsigned : 1;
+    unsigned RDSINT : 1;
+    unsigned RSQINT : 1;
+    unsigned : 2;
+    unsigned ERR : 1;
+    unsigned CTS : 1;
+};
+
+struct RevInfo {
+    unsigned char ptNum;
+    unsigned char fwmajor;
+    unsigned char fwminor;
+    int patch;
+    unsigned char cmpmajor;
+    unsigned char cmpminor;
+    unsigned char chiprev;
+};
+
+union Status {
+    struct RadioStatus radio;
+    unsigned int i;
+};
+
+struct RSQ {
+    unsigned int freq;
+    unsigned char snr;
+    unsigned char rssi;
+    unsigned char multi;
+};
+
 /**
  * Initialize the first SI4735 module
  */
 void initRadio(void);
 
+/**
+ * Remove power from the device and hold in reset
+ * for a little bit before powering back up
+ */
+void removePower(void);
+
+/**
+ * Soft shutdown of device
+ */
 void shutDown(void);
 
-void launchFM(void);
-void launchAM(void);
+/**
+ * Soft power up of radio
+ * @param band Turn it on in FM or AM mode
+ */
+void powerOn(enum Band band);
 
-void tuneStation(enum Band band, int freq);
-void seek(enum Band band, enum Direction dir);
+/**
+ * Tune into the station on the specified band
+ * @param band AM or FM. Changing the band requires a soft reset of the device
+ * @param freq Frequency to tune to
+ * @return True if tuned, false otherwise. Should only be false if the provided
+ *         frequency is invalid
+ */
+int tuneStation(enum Band band, int freq);
 
-void setVolume(int val);
+/**
+ * Tune into the given preset on the specified band
+ * @param band AM or FM. Changing the band requires a soft reset of the device
+ * @param preset Value 0-5, from memory
+ */
+void tunePreset(enum Band band, int preset);
 
-enum RadioCommands {
+/**
+ * Store the specified preset in memory
+ * @param band
+ * @param preset
+ * @param freq
+ */
+void setPreset(enum Band band, int preset, int freq);
+
+/**
+ * Find the next station with good enough signal quality on the band.
+ * @param band
+ * @param dir
+ * @param wrap If the edge of the range is hit, go to the other end
+ */
+void seek(enum Band band, enum Direction dir, int wrap);
+
+/**
+ * Check the status of the currently tuned station
+ * @return The signal quality and freqency
+ */
+struct RSQ tuneStatus(void);
+
+/**
+ * Get the chip's info for debugging purposes
+ * @return Chip info
+ */
+struct RevInfo getRevisionInfo(void);
+
+/**
+ * Set the volume to the specified value
+ * @param volume 0-63
+ */
+void setVolume(unsigned char volume);
+
+/**
+ *
+ * @return current volume level
+ */
+unsigned char getVolume(void);
+
+/**
+ * Turn sound on or off
+ * @param quiet When set, turn mute on
+ */
+void mute(int quiet);
+
+/**
+ *
+ * @return The value of the current status register
+ */
+struct RadioStatus getStatus(void);
+
+enum RadioCommand {
     POWER_UP = 0x01,
     GET_REV = 0x10,
     POWER_DOWN = 0x11,
@@ -56,7 +175,7 @@ enum RadioCommands {
     GPIO_SET = 0x81,
 };
 
-enum RadioProperties {
+enum RadioProperty {
     GPO_IEN = 0x0001,
     DIGITAL_OUTPUT_FORMAT = 0x0102,
     DIGITAL_OUTPUT_SAMPLE_RATE = 0x0104,
@@ -86,7 +205,7 @@ enum RadioProperties {
     FM_SEEK_BAND_TOP = 0x1401,
     FM_SEEK_FREQ_SPACING = 0x1402,
     FM_SEEK_TUNE_SNR_THRESHOLD = 0x1403,
-    FM_SEEK_TUNE_RSSI_TRESHOLD = 0x1404,
+    FM_SEEK_TUNE_RSSI_THRESHOLD = 0x1404,
     FM_RDS_INT_SOURCE = 0x1500,
     FM_RDS_INT_FIFO_COUNT = 0x1501,
     FM_RDS_CONFIG = 0x1502,
@@ -101,16 +220,6 @@ enum RadioProperties {
     FM_BLEND_SNR_MONO_THRESHOLD = 0x1805,
     RX_VOLUME = 0x4000,
     RX_HARD_MUTE = 0x4001
-};
-
-struct RadioStatus {
-    unsigned CTS : 1;
-    unsigned ERR : 1;
-    unsigned : 2;
-    unsigned RSQINT : 1;
-    unsigned RDSINT : 1;
-    unsigned : 1;
-    unsigned STCINT : 1;
 };
 
 #ifdef	__cplusplus
