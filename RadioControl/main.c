@@ -9,13 +9,8 @@
 #include "libLCD.h"
 #include "Si4735.h"
 
-extern int currentBand;
-extern int currentFreq;
 extern int currentPreset;
-
-extern char *rdsSong;
-extern char *rdsArtist;
-extern char *rdsId;
+extern int currentBand;
 
 extern struct RSQ g_tuneStatus;
 
@@ -40,22 +35,163 @@ enum DisplayModes {
     PRESETS_AM
 };
 
+#define convert_freq(band, freq_b) (band==FM) ? ((freq_b)+880)*10 : ((freq_b)+54)*10
+
 int main(void)
 {
     init_serial();
     initLCD();
     initRadio();
 
+    unsigned char volume = getVolume();
+
     // tune this bitch to 102.7
-    tuneStation(FM, 10270);
+    seek(FM, UP, 1);
     tuneStatus();
 
     char lcdStr[33];
 
     putsLCD("Radio!", LCD_SAMELINE);
 
-    int dispStat = 0;
-    
+    enum DisplayModes dispMode;
+    int refresh = 0;
+
+    while(1) {
+        if(available_serial() >= 6) {
+            char current = read_serial();
+            if(current != 128) {
+                continue;
+            }
+            refresh = 1;
+            // read the 4-bytes length
+            long length = (long)read_serial() << 24;
+            length |= (long)read_serial() << 16;
+            length |= (long)read_serial() << 8;
+            length |= (long)read_serial();
+
+            current = read_serial();
+            char opcode = (current & 0xE) >> 5;
+            switch(opcode) {
+                case TUNE:
+                {
+                    enum Band band = current & 0x10 >> 4;
+                    char freq_b = read_serial();
+                    int freq = convert_freq(band, freq_b);
+                    //tuneStation(band, freq);
+                    if(band == FM) {
+                        sprintf(lcdStr, "Tune FM: %d", freq);
+                    }
+                    else {
+                        sprintf(lcdStr, "Tune AM: %d", freq);
+                    }
+                    break;
+                }
+                case TUNE_PRESET:
+                {
+                    enum Band band = current & 0x10 >> 4;
+                    int preset = current & 0x0F;
+                    //tunePreset(band, preset);
+                    if(band == FM) {
+                        sprintf(lcdStr, "Tune FM Preset: %d", preset);
+                    }
+                    else {
+                        sprintf(lcdStr, "Tune AM Preset: %d", preset);
+                    }
+                }
+                    break;
+                case VOLUME:
+                {
+                    enum Direction dir = current & 0x10 >> 4;
+                    if(dir == UP) {
+                        ++volume;
+                    }
+                    else {
+                        --volume;
+                    }
+                    //setVolume(volume);
+                    sprintf(lcdStr, "Volume %d", volume);
+                }
+                    break;
+                case BAND:
+                {
+                    enum Band band = current & 0x10 >> 4;
+                    //tuneStation(band, getLastStation(band));
+                    if(band == FM) {
+                        sprintf(lcdStr, "Band set to FM");
+                    }
+                    else {
+                        sprintf(lcdStr, "Band set to AM");
+                    }
+                }
+                    break;
+                case SET_PRESET:
+                {
+                    enum Band band = current & 0x10 >> 4;
+                    int preset = current & 0x0F;
+                    char freq_b = read_serial();
+                    int freq = convert_freq(band, freq_b);
+                    //setPreset(band, preset, freq);
+                    if(band == FM) {
+                        sprintf(lcdStr, "Set FM Preset %d: %d", preset,  freq);
+                    }
+                    else {
+                        sprintf(lcdStr, "Set AM Preset %d: %d", preset,  freq);
+                    }
+                    break;
+                }
+                    break;
+                case NEXT:
+                {
+                    enum Direction dir = current & 0x10 >> 4;
+                    enum Mode mode = current & 0x0C >> 2;
+                    if(mode == PRESET) {
+                        currentPreset += (dir) ? 1 : -1;
+                        if(currentPreset < 0) currentPreset = 5;
+                        if(currentPreset > 5) currentPreset = 0;
+                        //tunePreset(currentBand, currentPreset);
+                        sprintf(lcdStr, "Tune preset %d", currentPreset);
+
+                    }
+                    else if(mode == FREQUENCY) {
+                        int currentFreq = getFrequency();
+                        currentFreq += (dir) ? 10 : -10;
+                        if(currentBand == FM) {
+                            if(currentFreq < FM_MIN_FREQ) currentFreq = FM_MAX_FREQ;
+                            if(currentFreq > FM_MAX_FREQ) currentFreq = FM_MIN_FREQ;
+                            sprintf(lcdStr, "Tune FM %d", currentFreq);
+                        }
+                        else {
+                            if(currentFreq < AM_MIN_FREQ) currentFreq = AM_MAX_FREQ;
+                            if(currentFreq > AM_MAX_FREQ) currentFreq = AM_MIN_FREQ;
+                            sprintf(lcdStr, "Tune AM %d", currentFreq);
+                        }
+                        tuneStation(currentBand, currentFreq);
+                    }
+                    else if(mode == SCAN) {
+                        //seek(currentBand, dir);
+                        sprintf(lcdStr, "Seek activated");
+                    }
+                }
+                    break;
+                case DISPLAY:
+                {
+                    dispMode = (current & 0x1C) >> 2;
+                    sprintf(lcdStr, "Set displayMode %d", dispMode);
+                }
+                    break;
+            }
+        }
+        if(refresh) {
+            refresh = 0;
+            clearLCD();
+            putsLCD(lcdStr, LCD_NEXTLINE);
+            LCD_DELAY(0xFFFF);
+            LCD_DELAY(0xFFFF);
+            LCD_DELAY(0xFFFF);
+        }
+    }
+    /*
+
     while(1) {
         if(dispStat == 0) {
             setCursorLCD(1, 0);
@@ -78,7 +214,7 @@ int main(void)
         else if(dispStat == 3) {
             setCursorLCD(1, 0);
             strncpy(lcdStr, "FREQ:", 6);
-            itoa(lcdStr+5, g_tuneStatus.freq, 10);
+            itoa(lcdStr+5, g_tuneStatus.intFlags, 10);
             putsLCD(lcdStr, LCD_NOWRAP);
         }
         else if(dispStat == 4) {
@@ -148,6 +284,7 @@ int main(void)
         setCursorLCD(1, 0);
         putsLCD("                ", LCD_NOWRAP);
     }
+     */
 }
 
 /*
@@ -176,88 +313,5 @@ int main(void)
 
 
 /*
-        if(available_serial() >= 6) {
-            char current = read_serial();
-            if(current != 128) {
-                continue;
-            }
 
-            // read the 4-bytes length
-            long length = (long)read_serial() << 24;
-            length |= (long)read_serial() << 16;
-            length |= (long)read_serial() << 8;
-            length |= (long)read_serial();
-
-            current = read_serial();
-            char opcode = (current & 0xE) >> 5;
-            switch(opcode) {
-                case TUNE:
-                {
-                    enum Band band = current & 0x10 >> 4;
-                    int freq = read_serial();
-                    tuneStation(band, freq);
-                    break;
-                }
-                case TUNE_PRESET:
-                {
-                    enum Band band = current & 0x10 >> 4;
-                    int preset = current & 0x0F;
-                    tunePreset(band, preset);
-                }
-                    break;
-                case VOLUME:
-                {
-                    enum Direction dir = current & 0x10 >> 4;
-                    setVolume(dir);
-                }
-                    break;
-                case BAND:
-                {
-                    enum Band band = current & 0x10 >> 4;
-                    tuneStation(band, getLastStation(band));
-                }
-                    break;
-                case SET_PRESET:
-                {
-                    enum Band band = current & 0x10 >> 4;
-                    int preset = current & 0x0F;
-                    int freq = read_serial();
-                    setPreset(band, preset, freq);
-                    break;
-                }
-                    break;
-                case NEXT:
-                {
-                    enum Direction dir = current & 0x10 >> 4;
-                    enum Mode mode = current & 0x0C >> 2;
-                    if(mode == PRESET) {
-                        currentPreset += (dir) ? 1 : -1;
-                        if(currentPreset < 0) currentPreset = 5;
-                        if(currentPreset > 5) currentPreset = 0;
-                        tunePreset(currentBand, currentPreset);
-                    }
-                    else if(mode == FREQUENCY) {
-                        currentFreq += (dir) ? 1 : -1;
-                        if(currentBand == FM) {
-                            if(currentFreq < FM_MIN_FREQ) currentFreq = FM_MAX_FREQ;
-                            if(currentPreset > FM_MAX_FREQ) currentFreq = FM_MIN_FREQ;
-                        }
-                        else {
-                            if(currentFreq < AM_MIN_FREQ) currentFreq = AM_MAX_FREQ;
-                            if(currentPreset > AM_MAX_FREQ) currentFreq = AM_MIN_FREQ;
-                        }
-                        tuneStation(currentBand, currentFreq);
-                    }
-                    else if(mode == SCAN) {
-                        seek(currentBand, dir);
-                    }
-                }
-                    break;
-                case DISPLAY:
-                {
-                    dispMode = (current & 0x1C) >> 2;
-                }
-                    break;
-            }
-        }
  */

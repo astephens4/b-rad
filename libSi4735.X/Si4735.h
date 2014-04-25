@@ -60,7 +60,10 @@ union Status {
 };
 
 struct RSQ {
-    unsigned int freq;
+    unsigned char intFlags;
+    unsigned char otherFlags;
+    unsigned char stblend;
+    unsigned char freqOff;
     unsigned char snr;
     unsigned char rssi;
     unsigned char multi;
@@ -125,6 +128,12 @@ void seek(enum Band band, enum Direction dir, int wrap);
  * @return The signal quality and freqency
  */
 struct RSQ tuneStatus(void);
+
+/**
+ * Get the frequency the chip is tuned to
+ * @return the frequency the radio is tuned to
+ */
+int getFrequency(void);
 
 /**
  * Get the chip's info for debugging purposes

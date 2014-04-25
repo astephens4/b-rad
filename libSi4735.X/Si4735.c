@@ -25,19 +25,21 @@
 // Some offsets for data stored in NVRAM
 #define SETTINGS_VALID 0x0
 #define LAST_BAND 0x2
-#define LAST_FREQ 0x4
-#define LAST_VOLUME 0x6
+#define LAST_FM_FREQ 0x4
+#define LAST_AM_FREQ 0x6
+#define LAST_VOLUME 0x8
 #define FM_PRESET_BEGIN 0x10
 #define AM_PRESET_BEGIN 0x20
 
 // Memory related constants
-#define MEMORY_CONTENTS_VALID_MAGIC 0xBEEF
+#define MEMORY_CONTENTS_VALID_MAGIC 0xCAFE
 #define NUM_PRESETS 6
 
 enum Band currentBand;
 int currentVolume;
 int currentPreset;
-int currentFreq;
+int currentAMFreq;
+int currentFMFreq;
 
 char rdsSong[34];
 char rdsArtist[34];
@@ -102,6 +104,12 @@ void waitForCTS(void)
 void waitForSTC(void)
 {
     while(1) {
+        BeginTX();
+
+        SendByte(GET_INT_STATUS);
+        
+        EndTX();
+        
         BeginRX();
 
         lastReceived.i = GetByte();
@@ -124,10 +132,12 @@ void sendCommand(enum RadioCommand cmd,
     if(nresp > MAX_CMD_RESP)
         nresp = MAX_CMD_RESP;
 
-    waitForCTS();
     // send command
-    BeginTX();    
+    waitForCTS();
+    BeginTX();
+    
     SendByte(cmd);
+    
     int i = 0;
     for(i = 0; i < nargs; ++i) {
         SendByte(args[i]);
@@ -138,15 +148,19 @@ void sendCommand(enum RadioCommand cmd,
     // get responses
     BeginRX();
     lastReceived.i = GetByte();
-    KeepReading();
-
-    for(i = 0; i < nresp; ++i) {
-        resp[i] = GetByte();
-        if(i < nresp-1) {
-            KeepReading();
-        }
+    if(nresp == 0) {
+        DoneReading();
     }
-    DoneReading();
+    else {
+        KeepReading();
+        for(i = 0; i < nresp; ++i) {
+            resp[i] = GetByte();
+            if(i < nresp-1) {
+                KeepReading();
+            }
+        }
+        DoneReading();
+    }
     EndRX();
 
     return;
@@ -164,17 +178,20 @@ int getProperty(enum RadioProperty property)
 void setProperty(enum RadioProperty property, int value)
 {
     cmdArgs[0] = 0;
-    cmdArgs[1] = property&0xFF00 >> 8;
-    cmdArgs[2] = property&0xFF;
-    cmdArgs[3] = value&0xFF00 >> 8;
-    cmdArgs[4] = value&0xFF;
+    cmdArgs[1] = (property&0xFF00) >> 8;
+    cmdArgs[2] = (property&0xFF);
+    cmdArgs[3] = (value&0xFF00) >> 8;
+    cmdArgs[4] = (value&0xFF);
     sendCommand(SET_PROPERTY, cmdArgs, 5, cmdResp, 0);
 }
 
 void configure(void)
 {
+    // From Programming guide, helps remove noise from audio
+    setProperty(0xFF00, 0);
+
     // enable RDS and STC interrupts
-    setProperty(GPO_IEN, 0x5);
+    setProperty(GPO_IEN, 0x25);
 
     // set some seek properties
     setProperty(FM_SEEK_TUNE_SNR_THRESHOLD, 3);
@@ -193,6 +210,9 @@ void configure(void)
 
     // 75 us for USA
     setProperty(FM_DEEMPHASIS, 0x2);
+
+    // set the volume to MAX!!!!
+    setVolume(63);
 }
 
 /**
@@ -231,16 +251,19 @@ void initRadio(void)
     int settingsValid = iReadSEE(SETTINGS_VALID);
     if(settingsValid == MEMORY_CONTENTS_VALID_MAGIC) {
         currentBand = iReadSEE(LAST_BAND);
-        currentFreq = iReadSEE(LAST_FREQ);
+        currentFMFreq = iReadSEE(LAST_FM_FREQ);
+        currentAMFreq = iReadSEE(LAST_AM_FREQ);
         currentVolume = iReadSEE(LAST_VOLUME);
     }
     else {
         currentBand = FM;
-        currentFreq = 9650;
+        currentFMFreq = 9650;
+        currentAMFreq = 700;
         currentVolume = 50;
         // write default preset values and last used into NVRAM
         iWriteSEE(LAST_BAND, currentBand);
-        iWriteSEE(LAST_FREQ, currentFreq);
+        iWriteSEE(LAST_FM_FREQ, currentFMFreq);
+        iWriteSEE(LAST_AM_FREQ, currentAMFreq);
         iWriteSEE(LAST_VOLUME, currentVolume);
 
         // Write the min freqs into the presets
@@ -256,7 +279,6 @@ void initRadio(void)
         iWriteSEE(SETTINGS_VALID, MEMORY_CONTENTS_VALID_MAGIC);
     }
 
-    removePower();
     powerOn(currentBand);
     configure();
 }
@@ -335,25 +357,31 @@ int tuneStation(enum Band band, int freq)
     else if((band == AM) && (freq < AM_MIN_FREQ || freq > AM_MAX_FREQ)) {
         return 0;
     }
-    currentFreq = freq;
     
     // Poll status until CTS is high
     waitForCTS();
 
     cmdArgs[0] = 0;
-    cmdArgs[1] = freq&0xFF00 >> 8;
+    cmdArgs[1] = (freq&0xFF00) >> 8;
     cmdArgs[2] = freq&0xFF;
     cmdArgs[3] = 0;
     sendCommand(FM_TUNE_FREQ, cmdArgs, 4, NULL, 0);
 
     // Wait for CTS so we can check STC
     waitForCTS();
-    waitForSTC();
+    //waitForSTC();
 
     // get the tune status
     g_tuneStatus = tuneStatus();
 
-    iWriteSEE(LAST_FREQ, freq);
+    if(band == FM) {
+        currentFMFreq = freq;
+        iWriteSEE(LAST_FM_FREQ, freq);
+    }
+    else {
+        currentAMFreq = freq;
+        iWriteSEE(LAST_AM_FREQ, freq);
+    }
     return 1;
 }
 
@@ -382,6 +410,12 @@ void tunePreset(enum Band band, int preset)
  */
 void setPreset(enum Band band, int preset, int freq)
 {
+    if((band == FM) && (freq < FM_MIN_FREQ || freq > FM_MAX_FREQ)) {
+        return;
+    }
+    else if((band == AM) && (freq < AM_MIN_FREQ || freq > AM_MAX_FREQ)) {
+        return;
+    }
     if(band == FM) {
         iWriteSEE(FM_PRESET_BEGIN+(preset*2), freq);
     }
@@ -405,11 +439,22 @@ void seek(enum Band band, enum Direction dir, int wrap)
         iWriteSEE(LAST_BAND, band);
     }
 
-    cmdArgs[0] = dir << 4 | wrap << 3;
+    cmdArgs[0] = (dir << 4) | (wrap << 3);
     sendCommand(FM_SEEK_START, cmdArgs, 1, NULL, 0);
 
+    waitForCTS();
+    //waitForSTC();
+
     tuneStatus();
-    iWriteSEE(LAST_FREQ, g_tuneStatus.freq);
+    int f = getFrequency();
+    if(band == FM) {
+        currentFMFreq = f;
+        iWriteSEE(LAST_FM_FREQ, f);
+    }
+    else {
+        currentAMFreq = f;
+        iWriteSEE(LAST_AM_FREQ, f);
+    }
 }
 
 /**
@@ -419,15 +464,16 @@ void seek(enum Band band, enum Direction dir, int wrap)
 struct RSQ tuneStatus(void)
 {
     cmdArgs[0] = 1;
-    sendCommand(FM_TUNE_STATUS, cmdArgs, 1, cmdResp, 7);
+    sendCommand(FM_RSQ_STATUS, cmdArgs, 1, cmdResp, 7);
 
     // byte 0 is a bunch of flags
+    g_tuneStatus.intFlags = cmdResp[0];
 
-    // byte 1 is the high byte of the tuned frequency
-    g_tuneStatus.freq = (int)cmdResp[1] << 8;
-
-    // byte 2 is the low byte of the tuned frequency
-    g_tuneStatus.freq |= (int)cmdResp[2];
+    // byte 1 is some more flags
+    g_tuneStatus.otherFlags = cmdResp[1];
+    
+    // byte 2 is the high byte of the tuned frequency
+    g_tuneStatus.stblend = cmdResp[2];
 
     // byte 3 is the Received Signal Strength Indicator
     g_tuneStatus.rssi = cmdResp[3];
@@ -438,9 +484,19 @@ struct RSQ tuneStatus(void)
     // byte 5 is the multipath interference measurement
     g_tuneStatus.multi = cmdResp[5];
 
-    // byte 6 is the antenna cap adjusted value
+    // byte 6 is the frequency offset
+    g_tuneStatus.freqOff = cmdResp[6];
 
     return g_tuneStatus;
+}
+
+int getFrequency(void)
+{
+    cmdArgs[0] = 0;
+    sendCommand(FM_TUNE_STATUS, cmdArgs, 1, cmdResp, 3);
+    int freq = (int)cmdResp[1]<<8;
+    freq |= (int)cmdResp[2];
+    return freq;
 }
 
 /**
